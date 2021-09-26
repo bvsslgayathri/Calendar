@@ -52,6 +52,7 @@ let modalContent = (ev) => {
   modalContent.classList.add('modal-content');
   let spn = document.createElement('span');
   spn.classList.add('close');
+  spn.setAttribute('id', 'close');
   spn.innerHTML = "&times;";
   let title = document.createElement('h2');
   title.innerHTML = `${ev.name}`;
@@ -75,9 +76,18 @@ let modalContent = (ev) => {
 const locateCoords = (event) => {
 	let start = document.getElementById(event.startTime);
 	let end = document.getElementById(event.endTime);
-	let startCoord = start.offsetLeft;
-	let endCoord = end.offsetLeft;
+  let startCoord, endCoord;
+  if(window.screen.width <= 700){
+    startCoord = start.offsetTop;
+    endCoord = end.offsetTop;
+  }
+  else{
+    startCoord = start.offsetLeft;
+	  endCoord = end.offsetLeft;
+  }
 	createEventElement(event, startCoord, endCoord);
+  console.log(startCoord);
+  console.log(endCoord);
   isEmpty = 0;
 }
 
@@ -85,11 +95,18 @@ const locateCoords = (event) => {
 const createEventElement = (event, start, end) => {
 	let eventElement = document.createElement('div');
 	let linkEle = document.createElement('a');
-	eventElement.style.position = "absolute";
-	eventElement.style.left = start + "px";
-	eventElement.style.width = (end-start) + "px";
-  eventElement.style.top = topPos + 'px';
-	linkEle.innerHTML = event.name;
+  linkEle.classList.add('eventHref');
+	if(window.screen.width <= 700){
+    eventElement.style.height = "40px";
+    linkEle.innerHTML = event.name + ` (${event.startTime} - ${event.endTime}) `;
+  }
+  else{
+    eventElement.style.position = "absolute";
+    eventElement.style.left = start + "px";
+	  eventElement.style.width = (end-start) + "px";
+    eventElement.style.top = topPos + 'px';
+    linkEle.innerHTML = event.name;
+  }
 	linkEle.href = "#";
   linkEle.append(modalContent(event));
   linkEle.setAttribute('data-object', event);
@@ -98,7 +115,6 @@ const createEventElement = (event, start, end) => {
 	eventElement.append(linkEle);
 	eventElement.classList.add("event");
 	eventsContainer.append(eventElement);
-  console.log("created");
   topPos += 50;
 }
 
