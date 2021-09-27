@@ -50,10 +50,10 @@ let modalContent = (ev) => {
   myModal.setAttribute('id', 'myModel');
   let modalContent = document.createElement('div');
   modalContent.classList.add('modal-content');
-  let spn = document.createElement('span');
-  spn.classList.add('close');
-  spn.setAttribute('id', 'close');
-  spn.innerHTML = "&times;";
+  // let spn = document.createElement('span');
+  // spn.classList.add('close');
+  // spn.setAttribute('id', 'close');
+  // spn.innerHTML = "&times;";
   let title = document.createElement('h2');
   title.innerHTML = `${ev.name}`;
   let para = document.createElement('p');
@@ -61,13 +61,16 @@ let modalContent = (ev) => {
   let fee = document.createElement('p');
   fee.innerHTML = "Fee : Rs.250(ieee member)\ Rs.350(non-ieee member)";
   let lnk = document.createElement('a');
-  lnk.innerHTML = "Register";
+  lnk.innerHTML = "Register" + "<br>";
+  let suggestion = document.createElement('small');
+  suggestion.innerHTML = "click on outside to close modal";
   lnk.href = `${ev.link}`;
-  modalContent.append(spn);
+  // modalContent.append(spn);
   modalContent.append(title);
   modalContent.append(para);
   modalContent.append(fee);
   modalContent.append(lnk);
+  modalContent.append(suggestion);
   myModal.append(modalContent);
   return myModal;
 }
